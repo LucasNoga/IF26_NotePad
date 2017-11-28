@@ -1,0 +1,41 @@
+<resources>
+    <!--Nom activite-->
+    <string name="app_name">Bloc-notes-IF26</string>
+    <string name="app_edit">Édition</string>
+
+    <!-- string menu contextuel-->
+    <string name="titleEditNote">Editer note</string>
+    <string name="saveNote">Sauvegarder</string>
+    <string name="deleteNote">Supprimer</string>
+    <string name="revertChanges">Annuler changement</string>
+    <string name="listEmpty">La liste est vide</string>
+    <string name="newPaste">Coller depuis le presse-papier</string>
+
+    <!-- string boite de dialog-->
+    <string name="dialogDeleteNote">Supprimer note ?</string>
+    <string name="dialogRevertChanges">Annuler tous les changements depuis la dernière sauvegarde?</string>
+    <string name="dialogDeleteSelected">Supprimer la note sélectionné ?</string>
+
+    <string name="toastClipboardEmpty">Le presse-papier est vide</string>
+
+    <string name="shareEntityName">Note</string>
+    <string name="sharePromptText">Partager la note</string>
+
+    <string name="toastNoteDeleted">Note supprimée</string>
+    <string name="toastNoteSaved">Note sauvegardée!</string>
+
+    <!-- menu principal-->
+    <string name="about">A propos</string>
+    <string name="exit">Quitter</string>
+    <string name="about_message">Bloc-notes pour android, dans le cadre du Projet IF26, 2017\n</string>
+
+    <!-- menu contextuel-->
+    <string name="titleMenuContextuel">Que voulez-vous faire</string>
+    <string-array name="menuContextuel">
+        <item>Copier le contenu</item>
+        <item>Partager</item>
+        <item>Dupliquer</item>
+        <item>Supprimer</item>
+    </string-array>
+
+</resources>

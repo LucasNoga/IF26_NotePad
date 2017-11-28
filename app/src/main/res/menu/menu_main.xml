@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="project.if26.if26_notepad.MainActivity">
+
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/ic_menu_aide"
+        android:title="@string/about" />
+
+    <item
+        android:id="@+id/nav_exit"
+        android:icon="@drawable/ic_menu_quitter"
+        android:title="@string/exit" />
+</menu>
