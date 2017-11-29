@@ -1,14 +1,30 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="project.if26.if26_notepad.MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<group android:id="@+id/menu_bottom">
+
+    <item
+        android:id="@+id/nav_add_note"
+        android:icon="@drawable/ic_add_note"
+        android:title="@string/add_note" />
 
     <item
         android:id="@+id/nav_help"
-        android:icon="@drawable/ic_menu_aide"
+        android:icon="@drawable/ic_help"
         android:title="@string/about" />
+
 
     <item
         android:id="@+id/nav_exit"
-        android:icon="@drawable/ic_menu_quitter"
+        android:icon="@drawable/ic_exit"
         android:title="@string/exit" />
+
+    <item
+        android:id="@+id/nav_preferences"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/preferences" />
+
+
+</group>
 </menu>

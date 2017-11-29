@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 /**
  * Activite qui possede la liste des notes
  */
-public class MainActivity extends AppCompatActivity implements OnGestureListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
      * app represente l'application
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
     /**
      * noteAdapter est l'adpater gerant les notes
      */
-    public static NoteAdapter noteAdapter;
+    static NoteAdapter noteAdapter;
 
     /**
      * noteRecyclerView Vue contenant l'adapter de note
@@ -56,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
     /**
      * twListeVide represente le TextView si la liste de note est vide
      */
-    private static TextView twListeVide;
+    static TextView twListeVide;
+
+    FloatingActionButton fab;
+
+    private DrawerLayout dwLayout;
 
     /**
      * /** Création de l'activité principale
@@ -71,13 +74,13 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
 
         twListeVide = (TextView) findViewById(R.id.tw_liste_vide);
 
-        //Creation de la barre d'action
-        CreateActionBar();
+        //Creation du drawer
+        createDrawer();
 
-        this.noteRecyclerView = (RecyclerView) findViewById(R.id.rv);
-        int nbColonne = 3;
-        GridLayoutManager glm = new GridLayoutManager(this, nbColonne);
-        noteRecyclerView.setLayoutManager(glm);
+        //Creation de la barre d'action
+        createActionBar();
+
+        createRecyclerView();
 
         //initialiseData(); //TODO a enlever
 
@@ -117,8 +120,9 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
+        fab.setBackgroundColor(Color.GRAY);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,8 +146,9 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
     }
 
 
-
-    //Permet d'affichier le message liste vide si pas de note
+    /**
+     * Permet d'afficher le message liste vide si pas de note ou de supprimer ce message
+     */
     public static void refreshNotes() {
         if (noteAdapter.getItemCount()==0)
             twListeVide.setVisibility(View.VISIBLE);
@@ -152,9 +157,27 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
     }
 
     /**
+     * Creation du drawer a gauche de l'activite principale
+     */
+    private void createDrawer() {
+        dwLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        assert mNavigationView != null;
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        // header navigation drawer
+        View headerView = mNavigationView.inflateHeaderView(R.layout.navigation_header);
+        TextView appVersion = (TextView) headerView.findViewById(R.id.version);
+        String s = getResources().getString(R.string.app_name) + " v version";
+        appVersion.setText(s);
+
+    }
+
+    /**
      * Creation de l'actionBar(vue en haut de l'activite principal)
      */
-    private void CreateActionBar() {
+    private void createActionBar() {
         Context context = getApplicationContext();
         int couleurTitre = ContextCompat.getColor(context, R.color.actionbar_title_color);
         String titre = context.getString(R.string.app_name);
@@ -164,6 +187,16 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         assert actionBar != null;
         //actionBar.setTitle(titre);
         actionBar.setTitle(Html.fromHtml("<font color='" + couleurTitre + "'>" + titre + "</font>"));
+    }
+
+    /**
+     * Mise en place des parametres pour le recyclerView
+     */
+    private void createRecyclerView(){
+        this.noteRecyclerView = (RecyclerView) findViewById(R.id.rv);
+        int nbColonne = 3;//on defini le nombre de colonne possible pour nos cardviews
+        GridLayoutManager glm = new GridLayoutManager(this, nbColonne);
+        noteRecyclerView.setLayoutManager(glm);
     }
 
     /**
@@ -230,28 +263,7 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         dialog.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_help:
-                showAboutDialog();
-                break;
-            case R.id.nav_exit:
-                exit();
-                break;
-
-            default:
-                break;
-        }
-        return true;
-    }
-
+    //TODO a commenter
     private void exit() {
         super.finish();
     }
@@ -286,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         //}
         //noinspection ConstantConditions
         //tvEmpty.setVisibility(View.GONE);
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         //List<Note> notes = gestionNotes.getAllNotes();
 
@@ -307,18 +319,30 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         //loadNotes();
     }
 
-    /*Methode implementé non utilisé*/
-    public void onNoClicked() {}
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-    public void onLongPress(MotionEvent e) {}
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {return false;}
-    public void onShowPress(MotionEvent e) {}
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        dwLayout.closeDrawers();
+        switch (menuItem.getItemId()) {
+
+            case R.id.nav_add_note:// ajoute une nouvelle note
+                fab.callOnClick();
+                Snackbar.make(findViewById(R.id.content_main_layout), "Coucou", Snackbar.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_help:
+                showAboutDialog();
+                break;
+
+            case R.id.nav_exit:
+                exit();
+                break;
+
+            case R.id.nav_preferences:
+                //TODO faire l'activite preferences
+                Snackbar.make(findViewById(R.id.content_main_layout), "Lancer une activite pour les preferences", Snackbar.LENGTH_SHORT).show();
+                break;
+
+        }
+        return true;
     }
 }

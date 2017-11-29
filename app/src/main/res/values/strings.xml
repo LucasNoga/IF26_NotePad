@@ -25,12 +25,15 @@
     <string name="toastNoteSaved">Note sauvegardée!</string>
 
     <!-- menu principal-->
+    <string name="add_note">Ajouter note</string>
     <string name="about">A propos</string>
     <string name="exit">Quitter</string>
     <string name="about_message">Bloc-notes pour android, dans le cadre du Projet IF26, 2017\n</string>
 
     <!-- menu contextuel-->
     <string name="titleMenuContextuel">Que voulez-vous faire</string>
+    <string name="version">1</string>
+    <string name="preferences">Paramètres</string>
     <string-array name="menuContextuel">
         <item>Copier le contenu</item>
         <item>Partager</item>

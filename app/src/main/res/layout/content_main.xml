@@ -18,7 +18,6 @@
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 
-
     <TextView
         android:id="@+id/tw_liste_vide"
         android:layout_width="fill_parent"

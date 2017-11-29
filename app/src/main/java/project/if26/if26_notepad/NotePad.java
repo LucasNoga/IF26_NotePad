@@ -32,4 +32,5 @@ public class NotePad extends Application {
         ClipData clipData = ClipData.newPlainText("text label", string);
         manager.setPrimaryClip(clipData);
     }
+
 }

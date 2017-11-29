@@ -36,5 +36,9 @@
             <item>Dupliquer</item>
             <item>Supprimer</item>
         </string-array>
+    <string name="add_note">Add note</string>
+        <string name="titleMenuContextuel">What do you want to do ?</string>
+        <string name="version">1</string>
+    <string name="preferences">Settings</string>
 
-    </resources>
+</resources>
