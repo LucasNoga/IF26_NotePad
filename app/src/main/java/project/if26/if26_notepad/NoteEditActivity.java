@@ -67,7 +67,6 @@ public class NoteEditActivity extends AppCompatActivity {
      * Methode qui detecte si c'est une nouvelle note ou une note existante
      */
     private void detectionNote() {
-        //TODO il faut detecter si un note a ete donner en parameter ou pas
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.getSerializable("Note") != null) { //si on ouvre un note qui existe

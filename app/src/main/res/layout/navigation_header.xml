@@ -13,7 +13,6 @@
     android:theme="@style/ThemeOverlay.AppCompat.Light"
     android:weightSum="1"
     tools:ignore="Overdraw">
-    <!-- android:background="@drawable/nav_header" TODO image pour le header -->
 
     <TextView
         android:id="@+id/version"

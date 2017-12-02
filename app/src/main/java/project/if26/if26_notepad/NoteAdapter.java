@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**Adapter pour les Note (Cardview)*/
-class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     public static final int NOTE_EDIT = 1;
 

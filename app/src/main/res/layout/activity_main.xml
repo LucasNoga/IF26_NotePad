@@ -48,6 +48,4 @@
         android:fitsSystemWindows="true"
         app:menu="@menu/menu_main" />
 
-    <!-- TODO couleur du backdound du drawer-->
-
 </android.support.v4.widget.DrawerLayout>

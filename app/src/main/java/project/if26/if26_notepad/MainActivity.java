@@ -26,6 +26,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+
+import project.if26.if26_notepad.database.NoteDB;
 
 /**
  * Activite qui possede la liste des notes
@@ -82,43 +85,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         createRecyclerView();
 
-        //initialiseData(); //TODO a enlever
+        chargerNote();
+
 
         noteAdapter = new NoteAdapter(notes, this);
         noteRecyclerView.setAdapter(noteAdapter);
 
         refreshNotes();//on regarde si il y a des notes au depart
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/* Handling incoming intent */
-        Intent intent = getIntent();
-        String type = intent.getType();
-        String action = intent.getAction();
-
-        if (type != null && (Intent.ACTION_VIEW.equals(action) || Intent.ACTION_SEND.equals(action)) ) {
-
-            if (type.startsWith("text/")) {
-
-                try {
-                    // Tentative d'ouverture du flux de données
-                    InputStream attachment = getContentResolver().openInputStream(getIntent().getData());
-                    BufferedReader r = new BufferedReader(new InputStreamReader(attachment));
-                    // Lecture du contenu
-                    String line;
-                    StringBuffer result = new StringBuffer();
-                    while ((line = r.readLine()) != null) {
-                        Log.i("contenu", line);
-                        result.append(line + "\n");
-                    }
-                    // openNote(new Note(gestionNotes, result.toString()));
-
-                } catch (Exception e) {//erreur lors de la lecture
-                    Snackbar.make(findViewById(R.id.content_main_layout), "Une erreur s'est produite lors de la lecture du fichier", Snackbar.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -127,9 +100,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 noteAdapter.createNote(); //on ouvre la note qu'on vient de creer
-                //TODO on ajoute une nouvelle note et on l'edit
             }
         });
+    }
+
+    // TODO a commenter // on recupere la liste des notes
+    private void chargerNote() {
+        notes = app.recupereNotesDB();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override
@@ -138,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onResume();
     }
 
-    /**TODO regarder ce que fait onPause*/
     @Override
     public void onPause() {
         refreshNotes();
@@ -169,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // header navigation drawer
         View headerView = mNavigationView.inflateHeaderView(R.layout.navigation_header);
         TextView appVersion = (TextView) headerView.findViewById(R.id.version);
-        String s = getResources().getString(R.string.app_name) + " v version";
+        String version = appVersion.getText().toString();
+        String s = getResources().getString(R.string.app_name) + " Version " + version;
         appVersion.setText(s);
-
     }
 
     /**
@@ -263,52 +246,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
     }
 
-    //TODO a commenter
-    private void exit() {
+    @Override
+    public void finish() {
+        Log.i("quitter", "elle est quitter");
+        //TODO c'est ici qu'on sauvegarder les donnees
         super.finish();
     }
 
-    //TODO methode de test a enlever a la fin
-    private void initialiseData() {
-        notes = new ArrayList<>();
-        notes.add(new Note("Salut"));
-        notes.add(new Note("Salut2"));
-        notes.add(new Note("Salut3"));
-        notes.add(new Note("Salut"));
-        notes.add(new Note("Salut2"));
-        notes.add(new Note("Salut3"));
-        notes.add(new Note("Salut"));
-        notes.add(new Note("Salut2"));
-        notes.add(new Note("Salut3"));
-    }
-
     /**
-     * TODO voir si il faut enlever
-     */
-    private void chargerNote() {
-        //TextView tvEmpty = (TextView) findViewById(R.id.tw_empty);
-        //ViewGroup parent = (ViewGroup) findViewById(R.id.tile_container);
-        //noteTiles.clear();
-        //noinspection ConstantConditions
-        //parent.removeAllViews();
-        //selectedNote = null;
-        // if (gestionNotes.isEmpty()) {
-        //    tvEmpty.setVisibility(View.VISIBLE);
-        //    return;
-        //}
-        //noinspection ConstantConditions
-        //tvEmpty.setVisibility(View.GONE);
-        //LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //List<Note> notes = gestionNotes.getAllNotes();
-
-        for (Note note : notes) {
-            //addTile(note, parent, inflater, null);
-        }
-    }
-
-    /**
-     * TODO A VOIR SI IL FAUT L'enlever
+     * TODO A voir dans l'autre projet
      */
     private void importerPressePapier() {
         try {
@@ -334,11 +280,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_exit:
-                exit();
+                this.finish();
                 break;
 
             case R.id.nav_preferences:
-                //TODO faire l'activite preferences
+                //TODO faire l'activite preferences si on a le temps
                 Snackbar.make(findViewById(R.id.content_main_layout), "Lancer une activite pour les preferences", Snackbar.LENGTH_SHORT).show();
                 break;
 
