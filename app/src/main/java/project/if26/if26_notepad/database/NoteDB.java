@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import project.if26.if26_notepad.Note;
@@ -18,8 +18,8 @@ l'insert, le delete, l'update et le select des note dans la BD et de faire des r
 */
 public class NoteDB{
 
-    private static final int VERSION_BDD = 1;
-    private static final String NOM_BDD = "IF26_TP5.db";
+    //private static final int VERSION_BDD = 1;
+    //private static final String NOM_BDD = "IF26_TP5.db";
 
     private static final String TABLE_NOTE = "note";    //   nom   de   la   table
     private static final String ATTRIBUT_ID = "id";    // liste des   attributs
@@ -38,26 +38,14 @@ public class NoteDB{
     }
 
     //on ouvre la BDD en écriture
-    public NoteDB open(){
+    private void open(){
         helper = new DBHelper(context);
         db = helper.getWritableDatabase();
-        return this;
     }
 
     //on ferme l'accès à la BDD
-    public void close(){
+    private void close(){
         helper.close();
-    }
-
-    //Insertion d'un tuple dans la base de donnees (fonctionne comme une HashMap)
-    public void insertNote(Note note) {
-        open();
-        ContentValues values = new ContentValues();
-        //on lui ajoute une valeur associée à une clé (qui est le nom de la colonne dans laquelle on veut mettre la valeur)
-        //values.put(ATTRIBUT_ID, note.getID());
-        values.put(ATTRIBUT_CONTENU, note.getContenu());
-        db.insert(TABLE_NOTE, ATTRIBUT_ID, values);//on insère l'objet dans la BDD via le ContentValues
-        close();
     }
 
     //retourne toutes les notes
@@ -91,22 +79,41 @@ public class NoteDB{
         return noteList;
     }
 
-
-    public void deleteAllNotes(){
+    /**
+     * Methode qui insert toutes les notes de l'activite
+     */
+    public void insertAllNotes(List<Note> notes) {
         open();
-        //TODO A faire une requete pour suppirmer tous les tuples
-        close();
+        ContentValues values;
+        for (Note note : notes){
+            values = new ContentValues();
+            values.put(ATTRIBUT_CONTENU, note.getContenu());
+            db.insert(TABLE_NOTE, ATTRIBUT_ID, values);//on insère l'objet dans la BDD via le ContentValues
+        }
     }
 
+    /**
+     * Methode qui permet de supprimer tous les tuples de la tables
+     */
+    public void deleteAllNotes(){
+        open();
+        db.delete(TABLE_NOTE, null, null);// supprime tous les tuples de la base
+    }
+
+    /**
+     * Methode qui recreer la table au cas ou
+     */
     public void createTable(){
         open();
         final String table_note_create = "CREATE TABLE " + TABLE_NOTE + " ("
                 + ATTRIBUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ATTRIBUT_CONTENU + " TEXT NOT NULL)";
         db.execSQL(table_note_create);
-        close();
     }
 
+    /**
+     * Methode qui supprime la table au cas ou
+     */
     public void deleteTable(){
         open();
         String req = "DROP TABLE IF EXISTS "+ TABLE_NOTE;

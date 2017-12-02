@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Locale;
 
-//TODO a commenter class atributs et methodes
+/**
+ * Classe representant les donnees de la Note
+ */
 public class Note implements Serializable{
 
     /**
@@ -20,6 +22,9 @@ public class Note implements Serializable{
      */
     private String contenu;
 
+    /**
+     * id pour la base de donnees
+     */
     private long id;
 
     /**
@@ -27,6 +32,10 @@ public class Note implements Serializable{
      */
     public Note() {}
 
+    /**
+     * Constructeur pour editer une note
+     * @param content contenu de la note
+     */
     Note(String content) {
         if (content == null)
             setContenu("");
@@ -34,6 +43,11 @@ public class Note implements Serializable{
             setContenu(content);
     }
 
+    /**
+     * constructeur pour la BD
+     * @param id id pour la bd
+     * @param content contenu de la note
+     */
     public Note(int id, String content) {
         this.id = id;
         if (content == null)
@@ -57,13 +71,6 @@ public class Note implements Serializable{
         this.contenu = contenu;
     }
 
-    public long getID(){
-        return this.id;
-    }
-
-    public void setID(long id){
-        this.id = id;
-    }
 
     /**
      * methode qui copie la note selectionné
@@ -74,7 +81,7 @@ public class Note implements Serializable{
     }
 
     /**
-     * //TODO a commenter
+     * //TODO voir l'utilité
      * @param noteManagement
      * @param application
      * @return

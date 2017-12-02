@@ -19,24 +19,29 @@ public class NotePad extends Application {
 
     NoteDB db;// represente la BD
 
-
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("dtabase", this.databaseList().toString());
-        Log.i("namedtabase", this.getDatabasePath("IF26_TP5.db").getAbsolutePath().toString());
 
-        //TODO l'idee c'est que pour sauvegarder dans la base on supprime toutes les entrees de la base et on insere les nouvelles
-        //db.createTable();
-        //db.deleteTable();
         db = new NoteDB(this);
-        //testBD();
 
+        //Log.i("dtabase", this.databaseList().toString());
+        //Log.i("namedtabase", this.getDatabasePath("IF26_TP5.db").getAbsolutePath().toString());
     }
 
-    //TODO a faire et a commenter methode qui retourne la liste des notes pour l'adapter
-    public ArrayList<Note> recupereNotesDB() {
+    /**
+     * Meyhode qui recupere les notes contenues dans la BD
+     */
+    public ArrayList<Note> chargerNote() {
         return db.getAllNotes();
+    }
+
+    /**
+     * Methode qui permet de sauvegarder les notes dans la BD
+     */
+    public void sauvegarderNote() {
+        db.deleteAllNotes(); // on supprime d'abord les notes pour inserer les nouvelles
+        db.insertAllNotes(MainActivity.notes);//on donne les notes du main en parametre
     }
 
     public CharSequence getContenuPressePapier() {
@@ -56,5 +61,4 @@ public class NotePad extends Application {
         ClipData clipData = ClipData.newPlainText("text label", string);
         manager.setPrimaryClip(clipData);
     }
-
 }

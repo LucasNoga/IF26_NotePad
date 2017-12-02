@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         createRecyclerView();
 
-        chargerNote();
+        notes = app.chargerNote(); // on recupere les notes de la BD
 
 
         noteAdapter = new NoteAdapter(notes, this);
@@ -102,11 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 noteAdapter.createNote(); //on ouvre la note qu'on vient de creer
             }
         });
-    }
-
-    // TODO a commenter // on recupere la liste des notes
-    private void chargerNote() {
-        notes = app.recupereNotesDB();
     }
 
     @Override
@@ -249,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void finish() {
         Log.i("quitter", "elle est quitter");
-        //TODO c'est ici qu'on sauvegarder les donnees
+        app.sauvegarderNote();
         super.finish();
     }
 
@@ -262,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (NullPointerException e) {
             Snackbar.make(findViewById(R.id.content_main_layout), "Le presse-papier est vide ", Snackbar.LENGTH_SHORT).show();
         }
-        //loadNotes();
     }
 
     @Override
@@ -279,13 +273,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 showAboutDialog();
                 break;
 
-            case R.id.nav_exit:
-                this.finish();
-                break;
-
             case R.id.nav_preferences:
                 //TODO faire l'activite preferences si on a le temps
                 Snackbar.make(findViewById(R.id.content_main_layout), "Lancer une activite pour les preferences", Snackbar.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_exit:
+                this.finish();
                 break;
 
         }
