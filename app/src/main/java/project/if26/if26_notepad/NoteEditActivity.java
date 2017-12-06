@@ -99,10 +99,6 @@ public class NoteEditActivity extends AppCompatActivity {
         String contenu = note.getContenu();
         textEdit.setText(contenu);
         textEdit.setSelection(textEdit.getText().toString().length()); //place le curseur sur le dernier caractere
-        textEdit.setLinksClickable(true);//TODO a voir
-        textEdit.setAutoLinkMask(Linkify.WEB_URLS);//TODO a voir
-        textEdit.setMovementMethod(LinkMovementMethod.getInstance());//TODO a voir
-        Linkify.addLinks(textEdit, Linkify.WEB_URLS);//TODO a voir
     }
     /**
      * methode qui gere la sauvegarde et/ou l'ajout des notes

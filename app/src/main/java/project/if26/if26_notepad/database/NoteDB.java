@@ -6,16 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import project.if26.if26_notepad.Note;
 
 
-/*
-DatabaseModule va permettre de gérer la table note de la BD
-l'insert, le delete, l'update et le select des note dans la BD et de faire des requêtes pour récupérer les notes contenu dans la BD.
-*/
+/**
+ * DatabaseModule va permettre de gérer la table note de la BD
+ * l'insert, le delete, l'update et le select des note dans la BD et de faire des requêtes pour récupérer les notes contenu dans la BD.
+ */
 public class NoteDB{
 
     //private static final int VERSION_BDD = 1;
@@ -51,30 +50,22 @@ public class NoteDB{
     //retourne toutes les notes
     public ArrayList<Note> getAllNotes() {
         open();
+
         ArrayList<Note> noteList = new ArrayList<>();
-        // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_NOTE;
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        int colId, colContenu, id;
+        int colContenu;
         String contenu;
-        int count = 0;
 
         if (cursor.moveToFirst()) {
-            colId = cursor.getColumnIndex(ATTRIBUT_ID);
             colContenu = cursor.getColumnIndex(ATTRIBUT_CONTENU);
-
             do {
-                id = cursor.getInt(colId);
                 contenu = cursor.getString(colContenu);
-                Note note = new Note(id, contenu);
+                Note note = new Note(contenu);
                 noteList.add(note);
-                count++;
             } while (cursor.moveToNext());
-            Log.i("The number of elements", count + "");
             cursor.close();
             close();
-            // return contact list
         }
         return noteList;
     }

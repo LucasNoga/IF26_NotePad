@@ -41,4 +41,8 @@
         <item>Supprimer</item>
     </string-array>
 
+    <string name="pref_color">Choisir votre theme</string>
+    <string name="pref_language">Choisir votre langue</string>
+    <string name="title_activity_settings">Preferences</string>
+
 </resources>

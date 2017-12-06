@@ -41,4 +41,6 @@
         <string name="version">1</string>
     <string name="preferences">Settings</string>
 
+    <string name="pref_color">Choose your theme</string>
+    <string name="pref_language">Choose your language</string>
 </resources>

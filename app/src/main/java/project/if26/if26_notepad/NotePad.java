@@ -24,9 +24,14 @@ public class NotePad extends Application {
         super.onCreate();
 
         db = new NoteDB(this);
-
         //Log.i("dtabase", this.databaseList().toString());
         //Log.i("namedtabase", this.getDatabasePath("IF26_TP5.db").getAbsolutePath().toString());
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Log.i("back", "yo");//TODO a voir
     }
 
     /**
@@ -42,18 +47,6 @@ public class NotePad extends Application {
     public void sauvegarderNote() {
         db.deleteAllNotes(); // on supprime d'abord les notes pour inserer les nouvelles
         db.insertAllNotes(MainActivity.notes);//on donne les notes du main en parametre
-    }
-
-    public CharSequence getContenuPressePapier() {
-        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip;
-        if(manager.hasPrimaryClip()) {
-            clip = manager.getPrimaryClip();
-            String textToPaste = clip.getItemAt(0).coerceToText(this).toString();
-            if (TextUtils.isEmpty(textToPaste)) return null;
-            return textToPaste;
-        }
-        return null;
     }
 
     public void setContenuPressePapier(CharSequence string) {

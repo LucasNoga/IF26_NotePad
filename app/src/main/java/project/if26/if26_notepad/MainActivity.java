@@ -17,18 +17,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-import project.if26.if26_notepad.database.NoteDB;
 
 /**
  * Activite qui possede la liste des notes
@@ -105,22 +99,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onResume() {
+        refreshNotes();
+        Log.i("resume", "elle est quitter");
+        super.onResume();
     }
 
     @Override
-    protected void onResume() {
+    protected void onStop() {
         refreshNotes();
-        super.onResume();
+        app.sauvegarderNote();
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        refreshNotes();
+        app.sauvegarderNote();
+        super.onStart();
     }
 
     @Override
     public void onPause() {
         refreshNotes();
+        Log.i("pause", "elle est quitter");
+        app.sauvegarderNote();
         super.onPause();
+    }
+
+
+    @Override
+    public void finish() {
+        Log.i("quitter", "elle est quitter");
+        app.sauvegarderNote();
+        super.finish();
     }
 
 
@@ -242,24 +254,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void finish() {
-        Log.i("quitter", "elle est quitter");
-        app.sauvegarderNote();
-        super.finish();
-    }
-
-    /**
-     * TODO A voir dans l'autre projet
-     */
-    private void importerPressePapier() {
-        try {
-            //note = gestionNotes.newFromClipboard(application);
-        } catch (NullPointerException e) {
-            Snackbar.make(findViewById(R.id.content_main_layout), "Le presse-papier est vide ", Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         dwLayout.closeDrawers();
         switch (menuItem.getItemId()) {
@@ -274,7 +268,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_preferences:
-                //TODO faire l'activite preferences si on a le temps
+                Intent intent =  new Intent(this, PreferencesActivity.class);
+                startActivityForResult(intent, 2);
                 Snackbar.make(findViewById(R.id.content_main_layout), "Lancer une activite pour les preferences", Snackbar.LENGTH_SHORT).show();
                 break;
 
