@@ -3,11 +3,19 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/sauvegarder"
+        android:title="@string/saveNote"
+        android:icon="@drawable/ic_sauvegarder"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="0">
+    </item>
+
+    <item
         android:id="@+id/deleteItem"
         android:title="@string/deleteNote"
         android:icon="@drawable/ic_supprimer"
         app:showAsAction="ifRoom"
-        android:orderInCategory="0">
+        android:orderInCategory="1">
     </item>
 
     <item

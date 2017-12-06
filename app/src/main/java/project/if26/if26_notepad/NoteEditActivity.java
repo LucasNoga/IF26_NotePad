@@ -7,8 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -92,6 +90,7 @@ public class NoteEditActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setTitle(Html.fromHtml("<font color='" + couleurTitre + "'>" + titre + "</font>"));
     }
+
     /**
      * Methode qui gere le cas ou la note existe et a un contenu
      */
@@ -100,6 +99,7 @@ public class NoteEditActivity extends AppCompatActivity {
         textEdit.setText(contenu);
         textEdit.setSelection(textEdit.getText().toString().length()); //place le curseur sur le dernier caractere
     }
+
     /**
      * methode qui gere la sauvegarde et/ou l'ajout des notes
      */
@@ -110,6 +110,17 @@ public class NoteEditActivity extends AppCompatActivity {
             addNote();
         else if(noteDeleted)//si on la supprime
             super.finish();
+        else //si c'est une note re-editer
+            modifierNote();//sinon on l'a modifie seulement
+        super.finish();
+    }
+
+    public void sauvegarderNote(){
+        if(isNewNote && noteDeleted)//si c'est une nouvelle note et qu'on la supprime
+            super.finish();
+        if(isNewNote) {//si c'est une nouvelle note on l'ajoute
+            addNote();
+        }
         else //si c'est une note re-editer
             modifierNote();//sinon on l'a modifie seulement
         super.finish();
@@ -150,7 +161,7 @@ public class NoteEditActivity extends AppCompatActivity {
             this.finish();
         else{
             MainActivity.notes.remove(notePosition);
-            MainActivity.refreshNotes();
+            MainActivity.noteAdapter.notifyDataSetChanged();//on met a jour les donnees
             Intent intent = new Intent();
             intent.putExtra("Note", "supprimé");
             setResult(RESULT_OK, intent);
@@ -167,8 +178,11 @@ public class NoteEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home://revenir a l'accueil
+            case android.R.id.home://revenir a l'activite principal
                 onBackPressed();
+                break;
+            case R.id.sauvegarder://sauvegarder la note
+                sauvegarderNote();
                 break;
             case R.id.deleteItem://note supprime
                 deleteNote();

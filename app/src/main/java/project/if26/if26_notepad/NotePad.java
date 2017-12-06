@@ -28,12 +28,6 @@ public class NotePad extends Application {
         //Log.i("namedtabase", this.getDatabasePath("IF26_TP5.db").getAbsolutePath().toString());
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        Log.i("back", "yo");//TODO a voir
-    }
-
     /**
      * Meyhode qui recupere les notes contenues dans la BD
      */
