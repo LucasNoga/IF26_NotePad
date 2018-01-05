@@ -2,6 +2,7 @@ package project.if26.if26_notepad;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         notes = app.chargerNote(); // on recupere les notes de la BD
 
-
         noteAdapter = new NoteAdapter(notes, this);
         noteRecyclerView.setAdapter(noteAdapter);
 
@@ -158,14 +158,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // header navigation drawer
         View headerView = mNavigationView.inflateHeaderView(R.layout.navigation_header);
-        TextView appVersion = (TextView) headerView.findViewById(R.id.version);
+        TextView appVersion = headerView.findViewById(R.id.version);
         String version = appVersion.getText().toString();
         String s = getResources().getString(R.string.app_name) + " Version " + version;
         appVersion.setText(s);
     }
 
     /**
-     * Creation de l'actionBar(vue en haut de l'activite principal)
+     * Creation de l'actionBar (vue en haut de l'activite principal)
      */
     private void createActionBar() {
         Context context = getApplicationContext();
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void createRecyclerView(){
         this.noteRecyclerView = (RecyclerView) findViewById(R.id.rv);
-        int nbColonne = 3;//on defini le nombre de colonne possible pour nos cardviews
+        int nbColonne = 3;
         GridLayoutManager glm = new GridLayoutManager(this, nbColonne);
         noteRecyclerView.setLayoutManager(glm);
     }

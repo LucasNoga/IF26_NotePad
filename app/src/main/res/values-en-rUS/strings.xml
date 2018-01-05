@@ -31,15 +31,19 @@
         <string name="about_message">NotePad for Android, IF26 Project, 2017\n</string>
 
         <string-array name="menuContextuel">
-            <item>Copier le contenu</item>
-            <item>Partager</item>
-            <item>Dupliquer</item>
-            <item>Supprimer</item>
+            <item>Copy content</item>
+            <item>Share</item>
+            <item>Duplicate</item>
+            <item>Delete</item>
         </string-array>
+
+    <string name="menuRetour">Back</string>
+
     <string name="add_note">Add note</string>
         <string name="titleMenuContextuel">What do you want to do ?</string>
         <string name="version">1</string>
     <string name="preferences">Settings</string>
+
 
     <string name="pref_color">Choose your theme</string>
     <string name="pref_language">Choose your language</string>

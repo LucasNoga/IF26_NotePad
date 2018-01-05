@@ -2,21 +2,21 @@
 <resources>
 
     <!-- activite principale background -->
-    <color name="main_activity_background">#94b7c1</color>
+    <color name="main_activity_background">#352c2c</color>
 
     <!-- pour les ActionBar -->
     <color name="actionbar_title_color">@color/accent_material_dark</color>
     <color name="actionbar_background_color">@color/primary_material_dark</color>
 
     <!-- pour les cardview -->
-    <color name="note">#611a83c4</color>
+    <color name="note">#61f1d018</color>
     <color name="text_note">#2b2525</color>
 
     <!-- pour le fab -->
     <color name="fab">#100f0e</color>
 
     <!-- edition note -->
-    <color name="edit_note_color">#611a83c4</color>
+    <color name="edit_note_color">#61F1D018</color>
 
     <color name="white">#FFFFFF</color>
 

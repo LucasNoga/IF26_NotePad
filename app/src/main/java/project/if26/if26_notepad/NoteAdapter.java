@@ -178,9 +178,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                                     choixMenuContextuel(choice, getAdapterPosition());
                                 }
                             })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(context.getResources().getString(R.string.menuRetour), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //On met rien c'est juste pour enlever la boite de dialgo
+                                    //On met rien c'est juste pour enlever la boite de dialog
                                 }
                             }).show();
 
